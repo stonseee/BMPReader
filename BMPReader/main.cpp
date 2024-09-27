@@ -123,7 +123,7 @@ public:
     }    
     void display()
     {
-        for (int i = 0; i < bmiHeader.biWidth; i++)
+        for (int i = bmiHeader.biWidth - 1; i >= 0; i--)
         {
             for (int j = 0; j < bmiHeader.biHeight; j++)
             {

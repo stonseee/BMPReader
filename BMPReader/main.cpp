@@ -1,18 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
-//#pragma warning (disable: 4236)
 #include<Windows.h>
 #include<iostream>
 #include<fstream>
 #include<string>
 #include<conio.h>
 #include<map>
-#include<list>
-#include<ctime>
-#include<sstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdlib.h>
 
 using std::cin;
 using std::cout;
@@ -36,12 +28,11 @@ private:
 public:
     BMPReader()
     {
-        cout << "BMPReader constructor " << this << endl;
+        //cout << "BMPReader constructor " << this << endl;
     }
     ~BMPReader()
     {
-        cout << "BMPReader destructor  " << this << endl;
-        
+        //cout << "BMPReader destructor  " << this << endl;        
     }
 
     void load(const std::string& fileName)

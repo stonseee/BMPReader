@@ -25,11 +25,11 @@ void BMPReader::load(const std::string& fileName)
         fin.read(buffer, 4);
         infoHeader.biWidth = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        infoHeader.biHeight = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biHeight = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 2);
         infoHeader.biPlanes = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 2);
-        infoHeader.biBitCount = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biBitCount = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
         infoHeader.biCompression = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
@@ -46,7 +46,7 @@ void BMPReader::load(const std::string& fileName)
         rgb = new RGBQUAD * [infoHeader.biWidth];
 
         for (int i = 0; i < infoHeader.biWidth; i++)
-            rgb[i] = new RGBQUAD[infoHeader.biHeight];
+            rgb[i] = new RGBQUAD[infoHeader.biHeight];           
 
         for (int i = 0; i < infoHeader.biWidth; i++)
         {

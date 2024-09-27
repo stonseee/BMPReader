@@ -29,7 +29,7 @@ void main()
             case 0: return;
             case 1:
             {
-                cout << "Input file name: ";
+                cout << "Input file location: ";
                 cin >> fileName;                
                 bmp.load(fileName);
                 bmp.info();

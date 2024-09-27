@@ -38,7 +38,7 @@ void main()
             case 2:
             {
                 if (bmp.empty())
-                    cout << ".bmp is empty!!" << endl;
+                    std::cerr << ".bmp is empty!!" << endl;
                 else
                 {
                     bmp.display();
@@ -55,7 +55,7 @@ void main()
             }case 4:
             {
                 if (bmp.empty())
-                    cout << ".bmp is empty!!" << endl;
+                    std::cerr << ".bmp is empty!!" << endl;
                 else
                     bmp.clear();
                 system("PAUSE");

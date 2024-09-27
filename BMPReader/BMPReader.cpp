@@ -69,7 +69,7 @@ void BMPReader::load(const std::string& fileName)
         else
         {
             BMPReader::clear();
-            cout << "Wrong size. Try another one." << endl;
+            std::cerr << "Wrong size. Try another one." << endl;
         }
 
         fin.close();

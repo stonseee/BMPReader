@@ -19,10 +19,10 @@ private:
     RGBQUAD** rgb;
     std::string fileName;
 public:
-    BMPReader()
-    {
-        //cout << "BMPReader constructor " << this << endl;
-    }
+    //BMPReader()
+    //{
+    //    //cout << "BMPReader constructor " << this << endl;
+    //}
     ~BMPReader()
     {
         //cout << "BMPReader destructor  " << this << endl;        

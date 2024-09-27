@@ -3,12 +3,12 @@
 #include<Windows.h>
 #include<iostream>
 #include<fstream>
-//#include<string>
-//#include<conio.h>
-//#include<map>
-//#include<list>
-//#include<ctime>
-//#include<sstream>
+#include<string>
+#include<conio.h>
+#include<map>
+#include<list>
+#include<ctime>
+#include<sstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -18,12 +18,21 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+const std::map<int, std::string>MENU_ITEMS =
+{
+    {1, "Upload .bmp"},
+    {2, "Open .bmp"},
+    {3, "Info "},
+    {4, "Release memory"},    
+};
+
 class BMPReader
 {
 private:
     BITMAPFILEHEADER header;
     BITMAPINFOHEADER bmiHeader;
     RGBQUAD** rgb;
+    std::string fileName;
 public:
     BMPReader()
     {
@@ -32,10 +41,12 @@ public:
     ~BMPReader()
     {
         cout << "BMPReader destructor  " << this << endl;
+        
     }
 
     void load(const std::string& fileName)
     {
+        this->fileName = fileName;
         std::ifstream fin(fileName, std::ios::binary);
         char* buffer = new char[4];
 
@@ -132,9 +143,40 @@ public:
             cout << endl;
         }
     }
-    void close()
+    void open()
     {
-        BMPReader::~BMPReader();
+        std::string command = "mspaint " + this->fileName;
+        system(command.c_str());
+    }
+    void clear()
+    {
+        header.bfType = 0;
+        header.bfSize = 0;
+        header.bfReserved1 = 0;
+        header.bfReserved2 = 0;
+        header.bfOffBits = 0;
+        
+        bmiHeader.biSize = 0;        
+        bmiHeader.biWidth = 0;
+        bmiHeader.biHeight = 0;        
+        bmiHeader.biPlanes = 0;        
+        bmiHeader.biBitCount = 0;        
+        bmiHeader.biCompression = 0;        
+        bmiHeader.biSizeImage = 0;       
+        bmiHeader.biXPelsPerMeter = 0;        
+        bmiHeader.biYPelsPerMeter = 0;        
+        bmiHeader.biClrUsed = 0;        
+        bmiHeader.biClrImportant = 0;
+
+        this->fileName.resize(0);
+        delete rgb;
+    }
+    bool empty()
+    {
+        if (this->fileName.empty())
+            return true;
+        else
+            return false;
     }
 
     int ascii_comparison(char sym)
@@ -446,129 +488,87 @@ public:
 
 
 
+int menu();
+
 void main()
 {
     //setlocale(LC_ALL, "");    
 
     BMPReader bmp;
 
-    bmp.load("1.bmp");
-    bmp.info();
-    bmp.display();
-    bmp.close();
-
-
-
-
-    /*BITMAPFILEHEADER header;
-    BITMAPINFOHEADER bmiHeader;
-
-    std::ifstream fin("1.bmp", std::ios::binary);
-    char* buffer = new char[4];
-    unsigned int n = 0;
-
-    if (fin.is_open())
+    do
     {
-        fin.read(buffer, 2);
-        header.bfType = sum_by_binary(ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        header.bfSize = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 2);
-        header.bfReserved1 = sum_by_binary(ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 2);
-        header.bfReserved2 = sum_by_binary(ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        header.bfOffBits = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-
-        cout << "header.bfType             " << header.bfType << endl;
-        cout << "header.bfSize             " << header.bfSize << endl;
-        cout << "header.bfReserved1        " << header.bfReserved1 << endl;
-        cout << "header.bfReserved2        " << header.bfReserved2 << endl;
-        cout << "header.bfOffBits          " << header.bfOffBits << endl;
-        cout << endl;
-        cout << endl;
-
-        fin.read(buffer, 4);
-        bmiHeader.biSize = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biWidth = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biHeight = sum_by_binary(ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 2);
-        bmiHeader.biPlanes = sum_by_binary(ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 2);
-        bmiHeader.biBitCount = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biCompression = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biSizeImage = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biXPelsPerMeter = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biYPelsPerMeter = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biClrUsed = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-        fin.read(buffer, 4);
-        bmiHeader.biClrImportant = sum_by_binary(ascii_comparison(buffer[3]), ascii_comparison(buffer[2]), ascii_comparison(buffer[1]), ascii_comparison(buffer[0]));
-
-        cout << "bmiHeader.biSize          " << bmiHeader.biSize << endl;
-        cout << "bmiHeader.biWidth         " << bmiHeader.biWidth << endl;
-        cout << "bmiHeader.biHeight        " << bmiHeader.biHeight << endl;
-        cout << "bmiHeader.biPlanes        " << bmiHeader.biPlanes << endl;
-        cout << "bmiHeader.biBitCount      " << bmiHeader.biBitCount << endl;
-        cout << "bmiHeader.biCompression   " << bmiHeader.biCompression << endl;
-        cout << "bmiHeader.biSizeImage     " << bmiHeader.biSizeImage << endl;
-        cout << "bmiHeader.biXPelsPerMeter " << bmiHeader.biXPelsPerMeter << endl;
-        cout << "bmiHeader.biYPelsPerMeter " << bmiHeader.biYPelsPerMeter << endl;
-        cout << "bmiHeader.biClrUsed       " << bmiHeader.biClrUsed << endl;
-        cout << "bmiHeader.biClrImportant  " << bmiHeader.biClrImportant << endl;
-        cout << endl;
-        cout << endl;
-
-
-        RGBQUAD** rgb = new RGBQUAD * [bmiHeader.biWidth];
-
-        for (int i = 0; i < bmiHeader.biWidth; i++)
+        switch (menu())
         {
-            rgb[i] = new RGBQUAD[bmiHeader.biHeight];
-        }
-
-        for (int i = 0; i < bmiHeader.biWidth; i++)
-        {
-            for (int j = 0; j < bmiHeader.biHeight; j++)
+            case 0: return;
+            case 1:
             {
-                fin.read(buffer, 3);
-                rgb[i][j].rgbBlue = ascii_comparison(buffer[0]);
-                rgb[i][j].rgbGreen = ascii_comparison(buffer[1]);
-                rgb[i][j].rgbRed = ascii_comparison(buffer[2]);
+                bmp.load("1.bmp");
+                bmp.info();
+                system("PAUSE");
+                break;
             }
-        }
-
-        for (int i = 0; i < bmiHeader.biWidth; i++)
-        {
-            for (int j = 0; j < bmiHeader.biHeight; j++)
+            case 2:
             {
-                if (rgb[i][j].rgbRed == 0 && rgb[i][j].rgbGreen == 0 && rgb[i][j].rgbBlue == 0)
-                {
-                    cout << "0 ";
-                }
+                bmp.display();
+                bmp.open();
+                system("PAUSE");
+                break;
+            }
+            case 3:
+            {
+                bmp.info();
+                system("PAUSE");
+                break;
+            }case 4:
+            {
+                if (bmp.empty())
+                    cout << ".bmp is empty!!" << endl;
                 else
-                {
-                    cout << "- ";
-                }
+                    bmp.clear();
+                system("PAUSE");
+                break;
             }
-            cout << endl;
         }
+    } while (true);
 
-        fin.close();
-    }
-    else
-    {
-        std::cerr << "Error: file not found" << endl;
-    }     */
+   
 }
 
+int menu()
+{
+    int selected_item = 1;
+    char key;
+    do
+    {
+        system("CLS");
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        for (int i = 1; i <= MENU_ITEMS.size(); i++)
+        {
+            cout << (i == selected_item ? "[" : " ");
+            cout << i << ". ";
+            cout.width(32);
+            cout << std::left;
+            if (i == selected_item)SetConsoleTextAttribute(hConsole, 0x70);
+            cout << MENU_ITEMS.at(i);
+            SetConsoleTextAttribute(hConsole, 0x07);
+            cout << (i == selected_item ? "  ]" : " ");
+            cout << endl;
+        }
+        key = _getch();
 
+        switch (key)
+        {
+        case 72: selected_item--; break;
+        case 80: selected_item++; break;
+        case 13: return selected_item;
+        case 27: return 0;
+        }
+        if (selected_item == MENU_ITEMS.size() + 1)selected_item = 1;
+        if (selected_item == 0)selected_item = MENU_ITEMS.size();
+    } while (key != 27);
+    return 0;
+}
 
 
 

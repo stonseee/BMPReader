@@ -70,22 +70,22 @@ void BMPReader::load(const std::string& fileName)
 
 void BMPReader::info()
 {
-    cout << "header.bfType             " << header.bfType << endl;
-    cout << "header.bfSize             " << header.bfSize << endl;
-    cout << "header.bfReserved1        " << header.bfReserved1 << endl;
-    cout << "header.bfReserved2        " << header.bfReserved2 << endl;
-    cout << "header.bfOffBits          " << header.bfOffBits << endl;
-    cout << "infoHeader.biSize          " << infoHeader.biSize << endl;
-    cout << "infoHeader.biWidth         " << infoHeader.biWidth << endl;
-    cout << "infoHeader.biHeight        " << infoHeader.biHeight << endl;
-    cout << "infoHeader.biPlanes        " << infoHeader.biPlanes << endl;
-    cout << "infoHeader.biBitCount      " << infoHeader.biBitCount << endl;
-    cout << "infoHeader.biCompression   " << infoHeader.biCompression << endl;
-    cout << "infoHeader.biSizeImage     " << infoHeader.biSizeImage << endl;
-    cout << "infoHeader.biXPelsPerMeter " << infoHeader.biXPelsPerMeter << endl;
-    cout << "infoHeader.biYPelsPerMeter " << infoHeader.biYPelsPerMeter << endl;
-    cout << "infoHeader.biClrUsed       " << infoHeader.biClrUsed << endl;
-    cout << "infoHeader.biClrImportant  " << infoHeader.biClrImportant << endl;
+    cout << "header.bfType               " << header.bfType << endl;
+    cout << "header.bfSize               " << header.bfSize << endl;
+    cout << "header.bfReserved1          " << header.bfReserved1 << endl;
+    cout << "header.bfReserved2          " << header.bfReserved2 << endl;
+    cout << "header.bfOffBits            " << header.bfOffBits << endl;
+    cout << "infoHeader.biSize           " << infoHeader.biSize << endl;
+    cout << "infoHeader.biWidth          " << infoHeader.biWidth << endl;
+    cout << "infoHeader.biHeight         " << infoHeader.biHeight << endl;
+    cout << "infoHeader.biPlanes         " << infoHeader.biPlanes << endl;
+    cout << "infoHeader.biBitCount       " << infoHeader.biBitCount << endl;
+    cout << "infoHeader.biCompression    " << infoHeader.biCompression << endl;
+    cout << "infoHeader.biSizeImage      " << infoHeader.biSizeImage << endl;
+    cout << "infoHeader.biXPelsPerMeter  " << infoHeader.biXPelsPerMeter << endl;
+    cout << "infoHeader.biYPelsPerMeter  " << infoHeader.biYPelsPerMeter << endl;
+    cout << "infoHeader.biClrUsed        " << infoHeader.biClrUsed << endl;
+    cout << "infoHeader.biClrImportant   " << infoHeader.biClrImportant << endl;
 }
 
 void BMPReader::display()

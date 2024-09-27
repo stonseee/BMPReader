@@ -31,8 +31,7 @@ void main()
             {
                 cout << "Input file location: ";
                 cin >> fileName;                
-                bmp.load(fileName);
-                bmp.info();
+                bmp.load(fileName);                
                 system("PAUSE");
                 break;
             }

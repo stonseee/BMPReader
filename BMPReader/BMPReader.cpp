@@ -46,7 +46,7 @@ void BMPReader::load(const std::string& fileName)
         rgb = new RGBQUAD * [infoHeader.biWidth];
 
         for (int i = 0; i < infoHeader.biWidth; i++)
-            rgb[i] = new RGBQUAD[infoHeader.biHeight];           
+            rgb[i] = new RGBQUAD[infoHeader.biHeight];
 
         for (int i = 0; i < infoHeader.biWidth; i++)
         {
@@ -57,6 +57,19 @@ void BMPReader::load(const std::string& fileName)
                 rgb[i][j].rgbGreen = ascii_comparison(buffer[1]);
                 rgb[i][j].rgbRed = ascii_comparison(buffer[2]);
             }
+        }               
+
+        if ((infoHeader.biWidth == infoHeader.biHeight) && (infoHeader.biWidth == 8) ||
+            (infoHeader.biWidth == infoHeader.biHeight) && (infoHeader.biWidth == 16) ||
+            (infoHeader.biWidth == infoHeader.biHeight) && (infoHeader.biWidth == 24) ||
+            (infoHeader.biWidth == infoHeader.biHeight) && (infoHeader.biWidth == 36))   
+        {
+            BMPReader::info();
+        }        
+        else
+        {
+            BMPReader::clear();
+            cout << "Wrong size if image. Try another one." << endl;
         }
 
         fin.close();
@@ -100,7 +113,7 @@ void BMPReader::display()
                 cout << "- ";
         }
         cout << endl;
-    }
+    }   
 }
 
 void BMPReader::open()

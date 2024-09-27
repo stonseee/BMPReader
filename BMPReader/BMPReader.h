@@ -36,6 +36,7 @@ public:
     bool empty();
 
     int ascii_comparison(char sym);
+    void int_to_binary(int* binary, int n);
     int sum_by_binary(int a, int b);
     int sum_by_binary(int a, int b, int c, int d);
 };

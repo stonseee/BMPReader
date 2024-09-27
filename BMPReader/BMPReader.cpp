@@ -300,6 +300,23 @@ int BMPReader::ascii_comparison(char sym)
     else return sym;
 }
 
+void BMPReader::int_to_binary(int* binary, int n)
+{
+    for (int j = 128, i = 0; i < 8; j /= 2)
+    {
+        if (n - j >= 0)
+        {
+            n -= j;
+            binary[i] = 1;
+        }
+        else
+        {
+            binary[i] = 0;
+        }
+        ++i;
+    }
+}
+
 int BMPReader::sum_by_binary(int a, int b)
 {
     int* binaryA = new int[8] {};
@@ -307,33 +324,8 @@ int BMPReader::sum_by_binary(int a, int b)
     int* binaryC = new int[16] {};
     int result = 0;
 
-    for (int j = 128, i = 0; i < 8; j /= 2)
-    {
-        if (a - j >= 0)
-        {
-            a -= j;
-            binaryA[i] = 1;
-        }
-        else
-        {
-            binaryA[i] = 0;
-        }
-        ++i;
-    }
-
-    for (int j = 128, i = 0; i < 8; j /= 2)
-    {
-        if (b - j >= 0)
-        {
-            b -= j;
-            binaryB[i] = 1;
-        }
-        else
-        {
-            binaryB[i] = 0;
-        }
-        ++i;
-    }
+    BMPReader::int_to_binary(binaryA, a);    
+    BMPReader::int_to_binary(binaryB, b);    
 
     for (int i = 0; i < 16; ++i)
     {
@@ -369,61 +361,10 @@ int BMPReader::sum_by_binary(int a, int b, int c, int d)
     int* binaryE = new int[32] {};
     int result = 0;
 
-    for (int j = 128, i = 0; i < 8; j /= 2)
-    {
-        if (a - j >= 0)
-        {
-            a -= j;
-            binaryA[i] = 1;
-        }
-        else
-        {
-            binaryA[i] = 0;
-        }
-        ++i;
-    }
-
-    for (int j = 128, i = 0; i < 8; j /= 2)
-    {
-        if (b - j >= 0)
-        {
-            b -= j;
-            binaryB[i] = 1;
-        }
-        else
-        {
-            binaryB[i] = 0;
-        }
-        ++i;
-    }
-
-    for (int j = 128, i = 0; i < 8; j /= 2)
-    {
-        if (c - j >= 0)
-        {
-            c -= j;
-            binaryC[i] = 1;
-        }
-        else
-        {
-            binaryC[i] = 0;
-        }
-        ++i;
-    }
-
-    for (int j = 128, i = 0; i < 8; j /= 2)
-    {
-        if (d - j >= 0)
-        {
-            d -= j;
-            binaryD[i] = 1;
-        }
-        else
-        {
-            binaryD[i] = 0;
-        }
-        ++i;
-    }
+    BMPReader::int_to_binary(binaryA, a);    
+    BMPReader::int_to_binary(binaryB, b);    
+    BMPReader::int_to_binary(binaryC, c);    
+    BMPReader::int_to_binary(binaryD, d);    
 
     for (int i = 0; i < 32; ++i)
     {

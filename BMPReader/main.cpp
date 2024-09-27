@@ -514,7 +514,7 @@ void main()
             {
                 bmp.display();
                 bmp.open();
-                system("PAUSE");
+                system("PAUSE");                
                 break;
             }
             case 3:

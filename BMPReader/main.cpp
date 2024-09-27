@@ -46,8 +46,9 @@ public:
 
     void load(const std::string& fileName)
     {
-        this->fileName = fileName;
-        std::ifstream fin(fileName, std::ios::binary);
+        this->fileName = fileName;        
+        std::ifstream fin;
+        fin.open(fileName, std::ios::binary);        
         char* buffer = new char[4];
 
         if (fin.is_open())
@@ -109,7 +110,7 @@ public:
         {
             std::cerr << "Error: file not found" << endl;
         }
-    }
+    }    
     void info()
     {
         cout << "header.bfType             " << header.bfType << endl;
@@ -128,7 +129,7 @@ public:
         cout << "bmiHeader.biYPelsPerMeter " << bmiHeader.biYPelsPerMeter << endl;
         cout << "bmiHeader.biClrUsed       " << bmiHeader.biClrUsed << endl;
         cout << "bmiHeader.biClrImportant  " << bmiHeader.biClrImportant << endl;
-    }
+    }    
     void display()
     {
         for (int i = 0; i < bmiHeader.biWidth; i++)
@@ -177,7 +178,7 @@ public:
             return true;
         else
             return false;
-    }
+    }    
 
     int ascii_comparison(char sym)
     {
@@ -324,7 +325,6 @@ public:
         if (sym == (char)255)return 255;
         else return sym;
     }
-
     int sum_by_binary(int a, int b)
     {
         int* binaryA = new int[8] {};
@@ -384,7 +384,6 @@ public:
 
         return result;
     }
-
     int sum_by_binary(int a, int b, int c, int d)
     {
         int* binaryA = new int[8] {};
@@ -495,6 +494,7 @@ void main()
     //setlocale(LC_ALL, "");    
 
     BMPReader bmp;
+    std::string fileName;    
 
     do
     {
@@ -503,7 +503,9 @@ void main()
             case 0: return;
             case 1:
             {
-                bmp.load("1.bmp");
+                cout << "Input file name: ";
+                cin >> fileName;                
+                bmp.load(fileName);
                 bmp.info();
                 system("PAUSE");
                 break;

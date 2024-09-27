@@ -15,7 +15,7 @@ class BMPReader
 {
 private:
     BITMAPFILEHEADER header;
-    BITMAPINFOHEADER bmiHeader;
+    BITMAPINFOHEADER infoHeader;
     RGBQUAD** rgb;
     std::string fileName;
 public:

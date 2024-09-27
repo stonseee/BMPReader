@@ -21,36 +21,36 @@ void BMPReader::load(const std::string& fileName)
         header.bfOffBits = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
 
         fin.read(buffer, 4);
-        bmiHeader.biSize = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biSize = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biWidth = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biWidth = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biHeight = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biHeight = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 2);
-        bmiHeader.biPlanes = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biPlanes = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 2);
-        bmiHeader.biBitCount = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biBitCount = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biCompression = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biCompression = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biSizeImage = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biSizeImage = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biXPelsPerMeter = BMPReader::BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biXPelsPerMeter = BMPReader::BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biYPelsPerMeter = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biYPelsPerMeter = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biClrUsed = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biClrUsed = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
         fin.read(buffer, 4);
-        bmiHeader.biClrImportant = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
+        infoHeader.biClrImportant = BMPReader::sum_by_binary(BMPReader::ascii_comparison(buffer[3]), BMPReader::ascii_comparison(buffer[2]), BMPReader::ascii_comparison(buffer[1]), BMPReader::ascii_comparison(buffer[0]));
 
-        rgb = new RGBQUAD * [bmiHeader.biWidth];
+        rgb = new RGBQUAD * [infoHeader.biWidth];
 
-        for (int i = 0; i < bmiHeader.biWidth; i++)
-            rgb[i] = new RGBQUAD[bmiHeader.biHeight];
+        for (int i = 0; i < infoHeader.biWidth; i++)
+            rgb[i] = new RGBQUAD[infoHeader.biHeight];
 
-        for (int i = 0; i < bmiHeader.biWidth; i++)
+        for (int i = 0; i < infoHeader.biWidth; i++)
         {
-            for (int j = 0; j < bmiHeader.biHeight; j++)
+            for (int j = 0; j < infoHeader.biHeight; j++)
             {
                 fin.read(buffer, 3);
                 rgb[i][j].rgbBlue = ascii_comparison(buffer[0]);
@@ -75,24 +75,24 @@ void BMPReader::info()
     cout << "header.bfReserved1        " << header.bfReserved1 << endl;
     cout << "header.bfReserved2        " << header.bfReserved2 << endl;
     cout << "header.bfOffBits          " << header.bfOffBits << endl;
-    cout << "bmiHeader.biSize          " << bmiHeader.biSize << endl;
-    cout << "bmiHeader.biWidth         " << bmiHeader.biWidth << endl;
-    cout << "bmiHeader.biHeight        " << bmiHeader.biHeight << endl;
-    cout << "bmiHeader.biPlanes        " << bmiHeader.biPlanes << endl;
-    cout << "bmiHeader.biBitCount      " << bmiHeader.biBitCount << endl;
-    cout << "bmiHeader.biCompression   " << bmiHeader.biCompression << endl;
-    cout << "bmiHeader.biSizeImage     " << bmiHeader.biSizeImage << endl;
-    cout << "bmiHeader.biXPelsPerMeter " << bmiHeader.biXPelsPerMeter << endl;
-    cout << "bmiHeader.biYPelsPerMeter " << bmiHeader.biYPelsPerMeter << endl;
-    cout << "bmiHeader.biClrUsed       " << bmiHeader.biClrUsed << endl;
-    cout << "bmiHeader.biClrImportant  " << bmiHeader.biClrImportant << endl;
+    cout << "bmiHeader.biSize          " << infoHeader.biSize << endl;
+    cout << "bmiHeader.biWidth         " << infoHeader.biWidth << endl;
+    cout << "bmiHeader.biHeight        " << infoHeader.biHeight << endl;
+    cout << "bmiHeader.biPlanes        " << infoHeader.biPlanes << endl;
+    cout << "bmiHeader.biBitCount      " << infoHeader.biBitCount << endl;
+    cout << "bmiHeader.biCompression   " << infoHeader.biCompression << endl;
+    cout << "bmiHeader.biSizeImage     " << infoHeader.biSizeImage << endl;
+    cout << "bmiHeader.biXPelsPerMeter " << infoHeader.biXPelsPerMeter << endl;
+    cout << "bmiHeader.biYPelsPerMeter " << infoHeader.biYPelsPerMeter << endl;
+    cout << "bmiHeader.biClrUsed       " << infoHeader.biClrUsed << endl;
+    cout << "bmiHeader.biClrImportant  " << infoHeader.biClrImportant << endl;
 }
 
 void BMPReader::display()
 {
-    for (int i = bmiHeader.biWidth - 1; i >= 0; i--)
+    for (int i = infoHeader.biWidth - 1; i >= 0; i--)
     {
-        for (int j = 0; j < bmiHeader.biHeight; j++)
+        for (int j = 0; j < infoHeader.biHeight; j++)
         {
             if (rgb[i][j].rgbRed == 0 && rgb[i][j].rgbGreen == 0 && rgb[i][j].rgbBlue == 0)
                 cout << "0 ";
@@ -117,17 +117,17 @@ void BMPReader::clear()
     header.bfReserved2 = 0;
     header.bfOffBits = 0;
 
-    bmiHeader.biSize = 0;
-    bmiHeader.biWidth = 0;
-    bmiHeader.biHeight = 0;
-    bmiHeader.biPlanes = 0;
-    bmiHeader.biBitCount = 0;
-    bmiHeader.biCompression = 0;
-    bmiHeader.biSizeImage = 0;
-    bmiHeader.biXPelsPerMeter = 0;
-    bmiHeader.biYPelsPerMeter = 0;
-    bmiHeader.biClrUsed = 0;
-    bmiHeader.biClrImportant = 0;
+    infoHeader.biSize = 0;
+    infoHeader.biWidth = 0;
+    infoHeader.biHeight = 0;
+    infoHeader.biPlanes = 0;
+    infoHeader.biBitCount = 0;
+    infoHeader.biCompression = 0;
+    infoHeader.biSizeImage = 0;
+    infoHeader.biXPelsPerMeter = 0;
+    infoHeader.biYPelsPerMeter = 0;
+    infoHeader.biClrUsed = 0;
+    infoHeader.biClrImportant = 0;
 
     this->fileName.resize(0);
     delete rgb;

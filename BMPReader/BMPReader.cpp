@@ -340,9 +340,9 @@ int BMPReader::sum_by_binary(int a, int b)
         --j;
     }
 
-    delete binaryC;
-    delete binaryB;
-    delete binaryA;
+    delete[] binaryC;
+    delete[] binaryB;
+    delete[] binaryA;
 
     return result;
 }
@@ -438,11 +438,11 @@ int BMPReader::sum_by_binary(int a, int b, int c, int d)
         --j;
     }
 
-    delete binaryE;
-    delete binaryD;
-    delete binaryC;
-    delete binaryB;
-    delete binaryA;
+    delete[] binaryE;
+    delete[] binaryD;
+    delete[] binaryC;
+    delete[] binaryB;
+    delete[] binaryA;
 
     return result;
 }
